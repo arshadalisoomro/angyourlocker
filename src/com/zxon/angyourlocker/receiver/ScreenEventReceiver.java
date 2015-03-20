@@ -10,6 +10,7 @@ public class ScreenEventReceiver extends BroadcastReceiver{
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent i = new Intent(context, LockActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 }

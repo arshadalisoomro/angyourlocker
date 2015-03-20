@@ -11,7 +11,7 @@ import android.os.IBinder;
 public class LockService extends Service{
 
     public static ScreenEventReceiver RECEIVER;  
-    public static boolean ifListenToScreenOn = false;
+    public static boolean ifListenToScreenOff = false;
     
     @Override
     public IBinder onBind(Intent intent) {
@@ -30,8 +30,8 @@ public class LockService extends Service{
     public int onStartCommand(Intent intent, int flags, int startId){
         LogUtil.d("LockService onStartCommand");
         
-        if (ifListenToScreenOn == false) {
-            ifListenToScreenOn = true;
+        if (ifListenToScreenOff == false) {
+            ifListenToScreenOff = true;
             addScreenEventListener();
         }
         
@@ -46,7 +46,7 @@ public class LockService extends Service{
     
     public void addScreenEventListener(){
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_SCREEN_ON);    
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(RECEIVER, intentFilter);
     }
 }
