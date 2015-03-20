@@ -4,5 +4,6 @@
     <string name="app_name">AngYourLocker</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_lock">LockActivity</string>
+    <string name="lock_now">立刻锁屏</string>
 
 </resources>
