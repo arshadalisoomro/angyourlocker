@@ -1,13 +1,18 @@
 
 package com.zxon.angyourlocker;
 
+import com.zxon.angyourlocker.lock.LockActivity;
 import com.zxon.angyourlocker.receiver.AdminReceiver;
+import com.zxon.angyourlocker.receiver.BootReceiver;
+import com.zxon.angyourlocker.receiver.ScreenEventReceiver;
+import com.zxon.angyourlocker.service.LockService;
 
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,7 +23,7 @@ public class MainActivity extends Activity {
 
     public static DevicePolicyManager policyManager;
     public static ComponentName componentName;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,8 @@ public class MainActivity extends Activity {
 
         componentName = new ComponentName(this, AdminReceiver.class);
 
+        Intent i = new Intent(this, LockService.class);
+        startService(i);
     }
 
     @Override
@@ -41,8 +48,7 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == Activity.RESULT_OK) {
-            policyManager.lockNow();
-            finish();
+            lockNow();
         } else {
             startAddDeviceAdminActivity();
         }
@@ -55,11 +61,18 @@ public class MainActivity extends Activity {
         if (!ifActive) {
             startAddDeviceAdminActivity();
         } else {
-            policyManager.lockNow();
-            finish();
+            lockNow();
         }
     }
 
+    public void lockNow() {
+        policyManager.lockNow();
+        
+        Intent i = new Intent(MainActivity.this, LockActivity.class);
+        startActivity(i);
+        finish();
+    }
+    
     private void startAddDeviceAdminActivity() {
         Intent i = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
         i.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
