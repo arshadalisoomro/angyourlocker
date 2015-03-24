@@ -1,76 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zxon.angyourlocker"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="com.zxon.angyourlocker"
+          android:versionCode="1"
+
+          android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
+            android:minSdkVersion="8"
+            android:targetSdkVersion="21"/>
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
-    
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW"/>
+
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:persistent="true"
+            android:name=".AngApplication"
+            android:theme="@style/AppTheme">
+        <!--android:theme="@android:style/Theme.NoDisplay"-->
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+                android:name=".MainActivity"
+                android:excludeFromRecents="true"
+                android:noHistory="true"
+                android:theme="@style/OverlayDialog"
+                android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        
+
         <activity
-            android:name="com.zxon.angyourlocker.lock.LockActivity"
-            android:label="@string/title_activity_lock" >
+                android:name="com.zxon.angyourlocker.lock.LockActivity"
+                android:launchMode="singleTask"
+                android:excludeFromRecents="true"
+                android:configChanges="orientation|keyboardHidden"
+                android:label="@string/title_activity_lock"
+                android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
+                android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+
+            </intent-filter>
         </activity>
-        
+
         <receiver
-            android:name="com.zxon.angyourlocker.receiver.AdminReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            
+                android:name="com.zxon.angyourlocker.receiver.AdminReceiver"
+                android:permission="android.permission.BIND_DEVICE_ADMIN">
+
             <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/lock_screen_policies">
+                    android:name="android.app.device_admin"
+                    android:resource="@xml/lock_screen_policies">
             </meta-data>
             <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLE_REQUESTED" />
-                <action android:name="android.app.action.DEVICE_ADMIN_DISABLE_REQUESTED" />
-                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED"/>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLE_REQUESTED"/>
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLE_REQUESTED"/>
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED"/>
             </intent-filter>
         </receiver>
-        
+
         <receiver android:name="com.zxon.angyourlocker.receiver.BootReceiver">
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>            
+            </intent-filter>
         </receiver>
-        
-        <service android:name="com.zxon.angyourlocker.service.LockService">
-            
+
+        <receiver
+                android:name="com.zxon.angyourlocker.service.LockService$mReceiver"
+                android:enabled="true"/>
+        <service
+                android:name="com.zxon.angyourlocker.service.LockService"
+                android:process=":Ang">
+
         </service>
     </application>
 
